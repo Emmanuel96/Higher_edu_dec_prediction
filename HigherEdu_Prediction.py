@@ -4,25 +4,14 @@ import pandas as pd
 import numpy as np
 import seaborn as sns
 
-from mlxtend.frequent_patterns import apriori
-from mlxtend.frequent_patterns import association_rules
-
 # sklearn imports
 from sklearn.metrics import mean_squared_error
 from sklearn.metrics import r2_score
 from sklearn.model_selection import train_test_split
-from sklearn.linear_model import LinearRegression
-from sklearn.linear_model import Ridge
-from sklearn.linear_model import Lasso
-from sklearn.linear_model import ElasticNet
-from sklearn.linear_model import OrthogonalMatchingPursuitCV
 from sklearn.preprocessing import LabelEncoder
-from sklearn.neural_network import MLPRegressor
 from sklearn import metrics
 
 # classifiers
-from sklearn import svm
-from sklearn.tree import DecisionTreeClassifier
 from sklearn.neural_network import MLPClassifier
 from sklearn.ensemble import AdaBoostClassifier
 from sklearn.neighbors import KNeighborsClassifier
@@ -76,9 +65,8 @@ def run_models(c_names, classifiers, X_train, X_test, y_train, y_test, save=0, s
         print(name + " took: " + str(end_time - start_time) + "seconds")
 # -- end of run_models function
 
+
 # function to convert categorical data to dummy data
-
-
 def handle_cat_data(cat_feats, data):
     for f in cat_feats:
         to_add = pd.get_dummies(data[f], prefix=f, drop_first=True)
@@ -99,6 +87,7 @@ student_data = pd.DataFrame(data)
 # drop all null data
 student_data.dropna(inplace=True)
 
+# array of categorical values
 cat_data = ['school', 'sex', 'address', 'famsize', 'Mjob', 'Fjob', 'reason', 'guardian', 'schoolsup', 'activities', 'nursery', 'fatherd', 'Pstatus', 'higher', 'internet', 'romantic', 'famrel',
             'freetime', 'goout', 'Dalc', 'Walc', 'health', 'Medu', 'famsup']
 
@@ -115,8 +104,8 @@ classifier_names = ["K Nearest Neighbour",
 # classifiers
 classifiers = [
     KNeighborsClassifier(),
-    MLPClassifier(max_iter=200),
+    MLPClassifier(),
     AdaBoostClassifier(),
 ]
-
+# run classification model
 run_models(classifier_names, classifiers, X_train, X_test, y_train, y_test)
